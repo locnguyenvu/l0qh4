@@ -66,18 +66,24 @@ class CommandHandler:
 
     def mlc(self, update, context):
         """ Map spending log with category """
-        search_log_id_result = re.search(r'\d+', update.message.text)
-        if search_log_id_result is None:
-            return
-        logid = int(search_log_id_result.group(0))
-        log = self._spendinglog_repository.find(logid, entity_class=Log)
-        if log is None:
+        if update.message.reply_to_message is None:
+            search_log_id_result = re.search(r'\d+', update.message.text)
+            if search_log_id_result is None:
+                return
+            logid = int(search_log_id_result.group(0))
+            log = self._spendinglog_repository.find(logid, entity_class=Log)
+        else:
+            log = self._spendinglog_repository.find_first(
+                    telegram_message_id=update.message.reply_to_message.message_id,         
+                    entity_class=Log)
+
+        if log is None or log.get_category_id() != None:
             return
         usecase = uc_sl.ListProposedCategoryUseCase()
         proposed_categories = usecase.execute(log)
 
         keyboard = [
-                [InlineKeyboardButton(f"{category['name']}", callback_data=f"mlc|logid={logid},categoryid={category['id']}")]
+                [InlineKeyboardButton(f"{category['name']}", callback_data=f"mlc|logid={log.get_id()},categoryid={category['id']}")]
                 for category in proposed_categories
         ]
 

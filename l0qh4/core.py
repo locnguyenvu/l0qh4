@@ -56,7 +56,7 @@ class BaseRepository:
         else:
             return resultset
 
-    def find_first(self, **kwargs):
+    def find_first(self, entity_class=None, **kwargs):
         orm_class = self.orm_class()
         query = self._session.query(orm_class)
         for key, value in kwargs.items():
@@ -64,7 +64,10 @@ class BaseRepository:
                 continue
             query = query.filter(getattr(orm_class, key) == value)
         result = query.first()
-        return result
+        if entity_class is None:
+            return result
+        else:
+            return entity_class.from_dict(self.orm_to_dict(result))
 
     def listall(self):
         resultset = self._session.query(self.orm_class()).all()
