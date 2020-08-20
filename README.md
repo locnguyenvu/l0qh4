@@ -6,6 +6,10 @@ Những website tôi đã tham khảo trong quá trình thực hiện project n�
 * https://www.php2python.com
 * https://realpython.com
 
+Tạo chat group trên telegram, add bot vào group. Ghi nhận chi tiêu bằng cách nhắn tin vào group, bot tự động lưu lại
+
+![Optional Text](image.png)
+
 ## Tech stack
     * python
     * postgreSQL
