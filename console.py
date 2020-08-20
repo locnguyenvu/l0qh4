@@ -13,6 +13,12 @@ from l0qh4.use_cases import spending_log as uc_sl
 def console():
     pass
 
+@console.command('initdb')
+def initdb():
+    dbengine = l0qh4.get('db').engine()
+    base = l0qh4.core.Base
+    base.metadata.create_all(dbengine)
+
 @console.command('asltc')
 def assign_spending_log_to_category():
     sl_repository = l0qh4.factory('spendinglog_repository')
