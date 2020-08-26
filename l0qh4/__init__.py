@@ -4,12 +4,16 @@ from . import (
         core, 
         repository, 
         spending, 
+        shared,
         users)
+
+from .shared import (
+        database)
 
 config = providers.Configuration('config')
 config.db.url.from_env('DATABASE_URL')
 
-database = providers.Singleton(core.DB, url = config.db.url)
+database = providers.Singleton(database.DB, url = config.db.url)
 
 """ Factory """
 
