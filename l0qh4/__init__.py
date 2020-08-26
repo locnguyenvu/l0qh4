@@ -40,6 +40,7 @@ spendingcategories = providers.Singleton(
         SpendingCategories,
         spendingcategory_repository = spendingcategory_repository_factory)
 
+
 users = providers.Singleton(
         users.Users,
         user_repository = user_repository_factory)

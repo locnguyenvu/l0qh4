@@ -11,7 +11,7 @@ class SpendingLogRepository(repository.Repository):
     
     ormclass = SpendingLog
 
-    def save(self, log: Log):
+    def store(self, log: Log):
         orm = self.ormclass()
         orm.id = log.get_id()
         orm.subject = log.get_subject()

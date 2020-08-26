@@ -22,11 +22,13 @@ def main():
 
     """ Command handler """
     command_handler = container.command_handler()
-    dp.add_handler(CommandHandler('hello', command_handler.hello))
+    from l0qh4.telegram.command.hello_command import HelloCommand 
+    dp.add_handler(CommandHandler('hello', HelloCommand()))
     dp.add_handler(CommandHandler('log', command_handler.log))
     dp.add_handler(CommandHandler('pm', command_handler.pm))
-    dp.add_handler(CommandHandler('td', command_handler.td))
-    dp.add_handler(CommandHandler('today', command_handler.today))
+    from l0qh4.telegram.command.today_command import TodayCommand
+    dp.add_handler(CommandHandler('td', TodayCommand()))
+    dp.add_handler(CommandHandler('today', TodayCommand(show_detail=True)))
     dp.add_handler(CommandHandler('tm', command_handler.tm))
     dp.add_handler(CommandHandler('mlc', command_handler.mlc))
 

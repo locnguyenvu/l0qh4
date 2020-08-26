@@ -1,8 +1,7 @@
 import l0qh4
 
-from ..core import Base
 from ..shared.domain_model import DomainModel
-from ..utils import StringUtil
+from ..utils import NumberUtil, StringUtil
 
 class Log(DomainModel):
 
@@ -34,7 +33,9 @@ class Log(DomainModel):
     def get_subject(self):
         return self.__subject
 
-    def get_amount(self):
+    def get_amount(self, human_format=False):
+        if human_format is True:
+            return NumberUtil.human_format(self.__amount)
         return self.__amount
 
     def set_category_id(self, cateid:int):
