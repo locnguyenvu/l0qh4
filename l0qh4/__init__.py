@@ -4,8 +4,7 @@ from . import (
         core, 
         repository, 
         spending, 
-        shared,
-        users)
+        shared)
 
 from .shared import (
         database)
@@ -25,20 +24,20 @@ spendingcategory_repository_factory = providers.Factory(
        repository.SpendingCategoryRepository,
        db = database)
 
-user_repository_factory = providers.Factory(
-       repository.UserRepository,
-       db = database)
-
 """ Singleton """
 from .repository.language_work_spending_category_map import LanguageWordSpendingCategoryMapRepository
 languagewordspendingcategorymap_repository = providers.Singleton(
        LanguageWordSpendingCategoryMapRepository,
        db = database)
 
-from .spending.categories import Categories as SpendingCategories
+from .repository.spendingcategory_repository import SpendingCategoryRepository
+spendingcategory_repository = providers.Singleton(
+        SpendingCategoryRepository,
+        database = database)
+from .spending.categories import Categories
 spendingcategories = providers.Singleton(
-        SpendingCategories,
-        spendingcategory_repository = spendingcategory_repository_factory)
+        Categories,
+        sc_repository = spendingcategory_repository)
 
 from .repository.user_repository import UserRepository
 user_repository = providers.Singleton(

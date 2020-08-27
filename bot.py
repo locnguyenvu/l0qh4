@@ -17,8 +17,9 @@ def main():
 
     dp = updater.dispatcher
 
-    callbackquery_handler = container.callbackquery_handler()
-    dp.add_handler(CallbackQueryHandler(callbackquery_handler.listen))
+    """ CallbackQuery handler """
+    from l0qh4.telegram.callbackquery.dispatcher import Dispatcher as CallbackQueryDispatcher
+    dp.add_handler(CallbackQueryHandler(CallbackQueryDispatcher()))
 
     """ Command handler """
     command_handler = container.command_handler()
@@ -33,9 +34,11 @@ def main():
     dp.add_handler(CommandHandler('tm', ThismonthCommand()))
     dp.add_handler(CommandHandler('thismonth', ThismonthCommand(show_detail=True)))
 
+    from l0qh4.telegram.command.selectslcategory_command import  SelectSlCategoryCommand
+    dp.add_handler(CommandHandler('mlc',SelectSlCategoryCommand()))
+
     dp.add_handler(CommandHandler('log', command_handler.log))
     dp.add_handler(CommandHandler('pm', command_handler.pm))
-    dp.add_handler(CommandHandler('mlc', command_handler.mlc))
 
     """ Message handler """
     message_handler = container.message_handler()

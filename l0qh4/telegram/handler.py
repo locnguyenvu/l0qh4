@@ -3,11 +3,11 @@ import telegram
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from pprint import pprint
-from ..repository import SpendingLogRepository, UserRepository
+from ..repository import SpendingLogRepository
 from ..spending.categories import Categories as SpendingCategories
 from ..spending.helper import LogMessage
 from ..spending.log import Log
-from ..users import Users
+from ..user.users import Users
 from ..utils import NumberUtil
 from ..use_cases import (
         spending_log as uc_sl
@@ -40,32 +40,6 @@ class CommandHandler:
         context.bot.send_message(
                 chat_id = update.effective_chat.id, 
                 text = 'Tổng cộng tháng trước: {:,}'.format(sum(list(map(lambda e: e.amount, todayspendinglog)))))
-
-    def mlc(self, update, context):
-        """ Map spending log with category """
-        if update.message.reply_to_message is None:
-            search_log_id_result = re.search(r'\d+', update.message.text)
-            if search_log_id_result is None:
-                return
-            logid = int(search_log_id_result.group(0))
-            log = self._spendinglog_repository.find(logid, entity_class=Log)
-        else:
-            log = self._spendinglog_repository.find_first(
-                    telegram_message_id=update.message.reply_to_message.message_id,         
-                    entity_class=Log)
-
-        if log is None or log.get_category_id() != None:
-            return
-        usecase = uc_sl.ListProposedCategoryUseCase()
-        proposed_categories = usecase.execute(log)
-
-        keyboard = [
-                [InlineKeyboardButton(f"{category['name']}", callback_data=f"mlc|logid={log.get_id()},categoryid={category['id']}")]
-                for category in proposed_categories
-        ]
-
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        update.message.reply_text(f'{log.get_subject()}', reply_markup=reply_markup)
 
 
     def log(self, update, context):        
@@ -127,27 +101,4 @@ class MessageHandler(CommandHandler):
             spending_log.transaction_type = log_message.transaction_type()
             self.spendinglog_repository.update(spending_log)
 
-class CallbackQueryHandler(CommandHandler):
-
-    def listen(self, update, context):
-        query = update.callback_query
-        querydata = query.data.split('|')
-        command = querydata[0]
-        params = dict()
-        for pinput in querydata[1].split(','):
-            pairkv = pinput.split('=')
-            params[pairkv[0]] = pairkv[1]
-
-        query.answer()
-        if command == 'mlc':
-            self.mlc(query, **params)
-
-    def mlc(self, query, logid, categoryid):
-        catename = self._spendingcategories.get_name(int(categoryid))
-        log = self._spendinglog_repository.find(logid, Log)
-
-        usecase = uc_sl.AssignCategoryUseCase()
-        usecase.execute(log, {"category_id": int(categoryid)})
-
-        query.edit_message_text(text=f"{log.get_subject()} => {catename}")
 

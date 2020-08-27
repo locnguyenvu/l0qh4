@@ -52,3 +52,6 @@ class Repository(metaclass=ABCMeta):
         result = query.first()
         return self.convert(result)
 
+    def save(self, orm: OrmModel):
+        self._session.add(orm)
+        self._session.commit()

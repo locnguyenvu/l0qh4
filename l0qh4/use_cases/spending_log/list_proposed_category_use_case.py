@@ -31,5 +31,5 @@ class ListProposedCategoryUseCase:
                     {"id": category.id, "name": category.name, "display_name": category.display_name}
                     for category in categories.list_byids([ca[0] for ca in wordcategorymap])
             ]
-        return categorydict
 
+        return categorydict
