@@ -40,10 +40,14 @@ spendingcategories = providers.Singleton(
         SpendingCategories,
         spendingcategory_repository = spendingcategory_repository_factory)
 
-
+from .repository.user_repository import UserRepository
+user_repository = providers.Singleton(
+        UserRepository,
+        database = database)
+from .user.users import Users
 users = providers.Singleton(
-        users.Users,
-        user_repository = user_repository_factory)
+        Users,
+        user_repository = user_repository)
 
 def factory(clsname: str):
     if clsname == 'spendinglog_repository':

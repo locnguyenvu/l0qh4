@@ -16,9 +16,12 @@ class TodayCommand(Command):
 
         if self._showdetail is False:
             self.reply(f'Tổng cộng hôm nay: {totalamount:,}')
+            return
         else:
+            users = l0qh4.get('users')
             spendingrows = [
-                '{:10.10} | {:<3}'.format(
+                '[{}] {:10.10} | {:<3}'.format(
+                    users.get_alias(telegram_username=log.get_created_by()),
                     log.get_subject(), 
                     log.get_amount(human_format=True)) 
                 for log in logs
@@ -29,7 +32,8 @@ class TodayCommand(Command):
                         '```',
                         '\n'.join(spendingrows),
                         '{:=>20}'.format('='),
-                        f'Tổng cộng hôm nay: {totalamount:,}',
+                        f'Tổng cộng: {totalamount:,}',
                         '```'
                     ]),
                 parse_mode = telegram.ParseMode.MARKDOWN_V2)
+            return

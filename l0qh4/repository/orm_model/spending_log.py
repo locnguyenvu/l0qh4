@@ -1,5 +1,5 @@
 from sqlalchemy import Boolean, Column, DateTime, Integer, String
-from l0qh4.shared.orm_model import OrmModel
+from ...shared.orm_model import OrmModel
 
 class SpendingLog(OrmModel):
     __tablename__ = 'spending_log'

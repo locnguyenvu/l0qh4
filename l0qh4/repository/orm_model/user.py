@@ -1,7 +1,7 @@
 from sqlalchemy import Boolean, Column, DateTime, Integer, String
-from . import Base, BaseRepository
+from ...shared.orm_model import OrmModel
 
-class User(Base):
+class User(OrmModel):
 
     __tablename__ = 'user'
 
@@ -35,10 +35,4 @@ class User(Base):
         self.alias = alias
 
     def __repr__(self):
-        return f"<User(name={self.telegram_username}, is_active={self.is_active})>"
-
-class UserRepository(BaseRepository):
-
-    @classmethod
-    def orm_class(cls):
-        return User
+        return f'<User(name={self.telegram_username}, is_active={self.is_active})>'

@@ -33,29 +33,6 @@ class CommandHandler:
             return False
         return self._users.is_active(telegram_username = tlg_username)
 
-    def hello(self, update, context):
-        if not self.is_authorized(update):
-            return
-        context.bot.send_message(
-                chat_id = update.effective_chat.id, 
-                text = "*Bot* nuôi heo của mỡ & nọng")
-
-    def td(self, update, context):
-        if not self.is_authorized(update):
-            return
-        todayspendinglog = self._spendinglog_repository.listall_intimerange('today')
-        context.bot.send_message(
-                chat_id = update.effective_chat.id, 
-                text = 'Tổng cộng hôm nay: {:,}'.format(sum(list(map(lambda e: e.amount, todayspendinglog)))))
-
-    def tm(self, update, context):
-        if not self.is_authorized(update):
-            return
-        todayspendinglog = self._spendinglog_repository.listall_intimerange('thismonth')
-        context.bot.send_message(
-                chat_id = update.effective_chat.id, 
-                text = 'Tổng cộng tháng này: {:,}'.format(sum(list(map(lambda e: e.amount, todayspendinglog)))))
-
     def pm(self, update, context):
         if not self.is_authorized(update):
             return
@@ -90,28 +67,6 @@ class CommandHandler:
         reply_markup = InlineKeyboardMarkup(keyboard)
         update.message.reply_text(f'{log.get_subject()}', reply_markup=reply_markup)
 
-    def today(self, update, context):
-        if not self.is_authorized(update):
-            return
-        todayspendinglog = self._spendinglog_repository.listall_intimerange('today')
-        spendingrows = [
-            '[{}] {:10.10} | {:<3}'.format(
-                self._users.get_alias(telegram_username = log.created_by),
-                log.subject, 
-                NumberUtil.human_format(log.amount)) 
-            for log in todayspendinglog
-        ]
-        totalamount = sum([ log.amount for log in todayspendinglog])
-        context.bot.send_message(
-                chat_id = update.effective_chat.id, 
-                text = '\n'.join([
-                        '```',
-                        '\n'.join(spendingrows),
-                        '{:=>20}'.format('='),
-                        f'Tổng cộng hôm nay: {totalamount:,}',
-                        '```'
-                    ]),
-                parse_mode = telegram.ParseMode.MARKDOWN_V2)
 
     def log(self, update, context):        
         if not self.is_authorized(update):
