@@ -30,6 +30,9 @@ class Log(DomainModel):
     def get_id(self):
         return self.__id
 
+    def set_id(self, id: int):
+        self.__id = id
+
     def get_subject(self):
         return self.__subject
 

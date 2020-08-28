@@ -4,13 +4,13 @@ import re
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from .command import Command
 from ...repository.spendinglog_repository import SpendingLogRepository
-from ...repository.languagewordspendingcategorymap_repository import LanguageWordSpendingCategoryMapRepository 
+from ...repository.spendingwordcategory_repository import SpendingWordCategoryRepository 
 
 class SelectSlCategoryCommand(Command):
 
     def __init__(self):
         self._sl_repository = SpendingLogRepository(l0qh4.get('db'))
-        self._lwscm_repository = LanguageWordSpendingCategoryMapRepository(l0qh4.get('db'))
+        self._swc_repository = SpendingWordCategoryRepository(l0qh4.get('db'))
 
     def find_log(self):
         logid_search = re.search(r'\d+', self.update.message.text)
@@ -28,7 +28,7 @@ class SelectSlCategoryCommand(Command):
 
         wordcategorymap = dict()
         for word in log.get_subject_words():
-            wcmapresultset = self._lwscm_repository.find_all(word = word)
+            wcmapresultset = self._swc_repository.find_all(word = word)
             for wcmap in wcmapresultset:
                 if wcmap.category_id in wordcategorymap:
                     wordcategorymap[wcmap.category_id] += wcmap.score

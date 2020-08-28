@@ -39,6 +39,11 @@ spendingcategories = providers.Singleton(
         Categories,
         sc_repository = spendingcategory_repository)
 
+from .repository.spendingwordcategory_repository import SpendingWordCategoryRepository
+spendingwordcategory_repository = providers.Singleton(
+        SpendingWordCategoryRepository,
+        database = database)
+
 from .repository.user_repository import UserRepository
 user_repository = providers.Singleton(
         UserRepository,
@@ -62,6 +67,8 @@ def get(servicename: str):
         return languagewordspendingcategorymap_repository()
     if servicename == 'spendingcategories':
         return spendingcategories()
+    if servicename == 'spendingwordcategory_repository':
+        return spendingwordcategory_repository()
     if servicename == 'users':
         return users()
     return None

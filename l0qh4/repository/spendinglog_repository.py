@@ -23,11 +23,12 @@ class SpendingLogRepository(repository.Repository):
         orm.created_by = log.get_created_by()
         orm.created_at = log.get_created_at()
         orm.updated_at = datetime.now()
-
         if orm.id is not None:
             orm = self._session.merge(orm)
         self._session.add(orm)
         self._session.commit()
+        log.set_id(orm.id)
+        return log
 
     
     def find_intimerange(self, timetext:str):

@@ -1,6 +1,8 @@
+from l0qh4.spending import helper
 from .command import Command
 
 class HelloCommand(Command):
 
     def process(self):
-        self.reply("*Bot* nuôi heo của mỡ & nọng")
+        logmessage = helper.LogMessage(self.get_command_text())
+

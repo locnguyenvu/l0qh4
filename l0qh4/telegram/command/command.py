@@ -33,6 +33,10 @@ class Command(metaclass=ABCMeta):
             tlg_username = self.update.edited_message.from_user.username
         return tlg_username
 
+    @property
+    def message_id(self):
+        return self.update.message.message_id
+
     def is_authorized(self) -> bool:
         tlg_username = self.username
         if tlg_username is None:
@@ -47,3 +51,5 @@ class Command(metaclass=ABCMeta):
                 text = text,
                 parse_mode = parse_mode)
 
+    def get_messagecontent(self):
+        return self.update.message.text

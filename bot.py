@@ -37,7 +37,8 @@ def main():
     from l0qh4.telegram.command.selectslcategory_command import  SelectSlCategoryCommand
     dp.add_handler(CommandHandler('mlc',SelectSlCategoryCommand()))
 
-    dp.add_handler(CommandHandler('log', command_handler.log))
+    from l0qh4.telegram.command.log_command import LogCommand
+    dp.add_handler(CommandHandler('log', LogCommand()))
     dp.add_handler(CommandHandler('pm', command_handler.pm))
 
     """ Message handler """
