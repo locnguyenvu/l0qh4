@@ -36,10 +36,16 @@ class Log(DomainModel):
     def get_subject(self):
         return self.__subject
 
+    def set_subject(self, subject:str):
+        self.__subject = subject
+
     def get_amount(self, human_format=False):
         if human_format is True:
             return NumberUtil.human_format(self.__amount)
         return self.__amount
+
+    def set_amount(self, amount:int):
+        self.__amount = amount
 
     def set_category_id(self, cateid:int):
         self.__spending_category_id = cateid
@@ -50,8 +56,14 @@ class Log(DomainModel):
     def get_payment_method(self):
         return self.__payment_method
 
+    def set_payment_method(self, paymentmethod: str):
+        self.__payment_method = paymentmethod
+
     def get_transaction_type(self):
         return self.__transaction_type
+
+    def set_transaction_type(self, transactiontype: str):
+        self.__transaction_type = transactiontype
 
     def get_telegram_message_id(self):
         return self.__telegram_message_id

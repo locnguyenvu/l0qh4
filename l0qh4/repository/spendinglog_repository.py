@@ -25,6 +25,8 @@ class SpendingLogRepository(repository.Repository):
         orm.updated_at = datetime.now()
         if orm.id is not None:
             orm = self._session.merge(orm)
+        elif orm.created_at is None:
+            orm.created_at = datetime.now()
         self._session.add(orm)
         self._session.commit()
         log.set_id(orm.id)

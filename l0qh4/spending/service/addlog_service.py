@@ -14,7 +14,8 @@ class AddLogService(object):
             transaction_type = params['transaction_type'], 
             telegram_message_id = params['telegram_message_id'], 
             created_by = params['created_by'], 
-            spending_category_id = None 
+            spending_category_id = None,
+            created_at = params.get('created_at', None)
         )
         log = self._sl_repository.store(log)
         return log

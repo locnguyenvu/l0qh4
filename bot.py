@@ -42,9 +42,9 @@ def main():
     dp.add_handler(CommandHandler('pm', command_handler.pm))
 
     """ Message handler """
-    message_handler = container.message_handler()
-    message_handler.add_group_id(os.getenv('TELEGRAM_LOGGING_GROUP_ID'))
-    dp.add_handler(MessageHandler(Filters.text & (~Filters.command), message_handler.listen))
+    from l0qh4.telegram.directmessage.dispatcher import Dispatcher as DirectMessageDispatcher
+    directmessaged_dispatcher = DirectMessageDispatcher(chatgroup_ids=os.getenv('TELEGRAM_LOGGING_GROUP_ID'))
+    dp.add_handler(MessageHandler(Filters.text & (~Filters.command), directmessaged_dispatcher))
 
     updater.start_polling()
     updater.idle()
