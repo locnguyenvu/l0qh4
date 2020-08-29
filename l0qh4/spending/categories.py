@@ -1,9 +1,10 @@
-from ..repository.spending_category import SpendingCategoryRepository
+from ..repository.spendingcategory_repository import SpendingCategoryRepository
 
 class Categories:
 
-    def __init__(self, spendingcategory_repository: SpendingCategoryRepository):
-        self.__data = spendingcategory_repository.listall()
+    def __init__(self, sc_repository: SpendingCategoryRepository):
+        self._sc_repository = sc_repository
+        self.__data = self._sc_repository.find_all()
 
     def get_name(self, catid: int):
         for category in self.__data:
@@ -26,3 +27,9 @@ class Categories:
             if category.id in ids:
                 result.append(category)
         return result
+
+    def exist(self, id: int) -> bool :
+        for category in self.__data:
+            if category.id == id:
+                return True
+        return False

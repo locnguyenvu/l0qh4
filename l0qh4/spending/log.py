@@ -1,19 +1,18 @@
 import l0qh4
 
-from pprint import pprint
-from ..core import Base
-from ..utils import StringUtil
+from ..shared.domain_model import DomainModel
+from ..utils import NumberUtil, StringUtil
 
-class Log:
+class Log(DomainModel):
 
     def __init__(self, 
-            subject: str, 
-            amount: int, 
-            payment_method: str, 
-            transaction_type: str, 
-            telegram_message_id: int, 
-            created_by: str, 
             id = None, 
+            subject: str = None, 
+            amount: int = None, 
+            payment_method: str = None, 
+            transaction_type: str = None, 
+            telegram_message_id: int = None, 
+            created_by: str = None, 
             spending_category_id = None, 
             created_at = None, 
             updated_at = None):
@@ -28,25 +27,25 @@ class Log:
         self.__created_at = created_at
         self.__updated_at = updated_at
 
-    @classmethod
-    def from_dict(cls, adict):
-        return Log(
-                id = adict['id'],
-                subject = adict['subject'],
-                amount = adict['amount'],
-                payment_method = adict['payment_method'],
-                transaction_type = adict['transaction_type'],
-                telegram_message_id = adict['telegram_message_id'],
-                created_by = adict['created_by'],
-                spending_category_id = adict['spending_category_id'],
-                created_at = adict['created_at'],
-                updated_at = adict['updated_at'])
-
     def get_id(self):
         return self.__id
 
+    def set_id(self, id: int):
+        self.__id = id
+
     def get_subject(self):
         return self.__subject
+
+    def set_subject(self, subject:str):
+        self.__subject = subject
+
+    def get_amount(self, human_format=False):
+        if human_format is True:
+            return NumberUtil.human_format(self.__amount)
+        return self.__amount
+
+    def set_amount(self, amount:int):
+        self.__amount = amount
 
     def set_category_id(self, cateid:int):
         self.__spending_category_id = cateid
@@ -54,14 +53,29 @@ class Log:
     def get_category_id(self):
         return self.__spending_category_id
 
-    def get_amount(self):
-        return self.__amount
-
     def get_payment_method(self):
         return self.__payment_method
 
+    def set_payment_method(self, paymentmethod: str):
+        self.__payment_method = paymentmethod
+
     def get_transaction_type(self):
         return self.__transaction_type
+
+    def set_transaction_type(self, transactiontype: str):
+        self.__transaction_type = transactiontype
+
+    def get_telegram_message_id(self):
+        return self.__telegram_message_id
+
+    def get_created_by(self):
+        return self.__created_by
+
+    def get_created_at(self):
+        return self.__created_at
+
+    def get_updated_at(self):
+        return self.__updated_at
 
     def get_subject_words(self):
         return StringUtil.split_to_words(self.__subject)

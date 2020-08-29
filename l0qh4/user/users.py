@@ -1,9 +1,10 @@
-from .repository import UserRepository
+from ..repository.user_repository import UserRepository
 
-class Users:
+class Users(object):
 
-    def __init__(self, user_repository: UserRepository) -> None:
-        self.__data = user_repository.listall()
+    def __init__(self, user_repository: UserRepository):
+        self.__u_repository = user_repository
+        self.__data = self.__u_repository.find_all()
 
     def find_user(self, **kwargs):
         for key, value in kwargs.items():
@@ -25,4 +26,3 @@ class Users:
         if user is not None:
             return user.is_active
         return None
-

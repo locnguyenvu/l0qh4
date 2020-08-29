@@ -17,23 +17,32 @@ def main():
 
     dp = updater.dispatcher
 
-    callbackquery_handler = container.callbackquery_handler()
-    dp.add_handler(CallbackQueryHandler(callbackquery_handler.listen))
+    """ CallbackQuery handler """
+    from l0qh4.telegram.callbackquery.dispatcher import Dispatcher as CallbackQueryDispatcher
+    dp.add_handler(CallbackQueryHandler(CallbackQueryDispatcher()))
 
     """ Command handler """
-    command_handler = container.command_handler()
-    dp.add_handler(CommandHandler('hello', command_handler.hello))
-    dp.add_handler(CommandHandler('log', command_handler.log))
-    dp.add_handler(CommandHandler('pm', command_handler.pm))
-    dp.add_handler(CommandHandler('td', command_handler.td))
-    dp.add_handler(CommandHandler('today', command_handler.today))
-    dp.add_handler(CommandHandler('tm', command_handler.tm))
-    dp.add_handler(CommandHandler('mlc', command_handler.mlc))
+    from l0qh4.telegram.command.hello_command import HelloCommand 
+    dp.add_handler(CommandHandler('hello', HelloCommand()))
+
+    from l0qh4.telegram.command.today_command import TodayCommand
+    dp.add_handler(CommandHandler('td', TodayCommand()))
+    dp.add_handler(CommandHandler('today', TodayCommand(show_detail=True)))
+
+    from l0qh4.telegram.command.thismonth_command import ThismonthCommand
+    dp.add_handler(CommandHandler('tm', ThismonthCommand()))
+    dp.add_handler(CommandHandler('thismonth', ThismonthCommand(show_detail=True)))
+
+    from l0qh4.telegram.command.selectslcategory_command import  SelectSlCategoryCommand
+    dp.add_handler(CommandHandler('mlc',SelectSlCategoryCommand()))
+
+    from l0qh4.telegram.command.log_command import LogCommand
+    dp.add_handler(CommandHandler('log', LogCommand()))
 
     """ Message handler """
-    message_handler = container.message_handler()
-    message_handler.add_group_id(os.getenv('TELEGRAM_LOGGING_GROUP_ID'))
-    dp.add_handler(MessageHandler(Filters.text & (~Filters.command), message_handler.listen))
+    from l0qh4.telegram.directmessage.dispatcher import Dispatcher as DirectMessageDispatcher
+    directmessaged_dispatcher = DirectMessageDispatcher(chatgroup_ids=os.getenv('TELEGRAM_LOGGING_GROUP_ID'))
+    dp.add_handler(MessageHandler(Filters.text & (~Filters.command), directmessaged_dispatcher))
 
     updater.start_polling()
     updater.idle()

@@ -1,8 +1,7 @@
 from sqlalchemy import and_, Boolean, Column, DateTime, Integer, String
-from sqlalchemy.sql import select
-from . import Base, BaseRepository, DateTimeUtil
+from ...shared.orm_model import OrmModel
 
-class SpendingCategory(Base):
+class SpendingCategory(OrmModel):
 
     __tablename__ = 'spending_category'
 
@@ -29,9 +28,3 @@ class SpendingCategory(Base):
     def __repr__(self):
         return f"<(id={self.id}, name={self.name})>"
 
-
-class SpendingCategoryRepository(BaseRepository):
-
-    @classmethod
-    def orm_class(cls):
-        return SpendingCategory
