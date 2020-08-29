@@ -1,10 +1,14 @@
+import l0qh4
+
+from .service import Service
 from ..log import Log
 from ...repository.spendinglog_repository import SpendingLogRepository
 
-class AddLogService(object):
+class AddLogService(Service):
 
-    def __init__(self, sl_repository: SpendingLogRepository):
-        self._sl_repository = sl_repository
+    def __init__(self):
+        db = l0qh4.get('db')
+        self._sl_repository = SpendingLogRepository(db)
 
     def execute(self, params: dict):
         log = Log(

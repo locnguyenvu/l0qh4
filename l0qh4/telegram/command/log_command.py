@@ -1,7 +1,6 @@
 import l0qh4
 
 from .command import Command
-from ...repository.spendinglog_repository import SpendingLogRepository
 from ...spending.service.addlog_service import AddLogService
 from ...spending.helper import LogMessage
 
@@ -11,7 +10,7 @@ class LogCommand(Command):
         log_message = LogMessage(self.get_messagecontent())
 
         db = l0qh4.get('db')
-        addlog_service = AddLogService(sl_repository = SpendingLogRepository(db))
+        addlog_service = AddLogService()
         log = addlog_service.execute({
             "subject" : log_message.subject(),
             "amount" : log_message.amount(),

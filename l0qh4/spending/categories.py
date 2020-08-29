@@ -27,3 +27,9 @@ class Categories:
             if category.id in ids:
                 result.append(category)
         return result
+
+    def exist(self, id: int) -> bool :
+        for category in self.__data:
+            if category.id == id:
+                return True
+        return False

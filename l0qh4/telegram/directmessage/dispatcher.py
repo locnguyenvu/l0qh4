@@ -56,8 +56,7 @@ class Dispatcher(object):
 
     def _addlog(self):
         """ Add new log """
-        db = l0qh4.get('db')
-        addlog_service = AddLogService(sl_repository = SpendingLogRepository(db))
+        addlog_service = AddLogService()
         chat_info = self.update.message.chat
         log_message = LogMessage(self.update.message.text)
         if chat_info.type == 'group' and chat_info.id not in self.__chatgroup_ids:

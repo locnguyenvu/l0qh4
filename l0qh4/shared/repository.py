@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-
+from datetime import datetime
 from sqlalchemy import and_, Boolean, Column, DateTime, Integer, String
 from .database import DB
 from .orm_model import OrmModel
@@ -53,5 +53,6 @@ class Repository(metaclass=ABCMeta):
         return self.convert(result)
 
     def save(self, orm: OrmModel):
+        orm.updated_at = datetime.now()
         self._session.add(orm)
         self._session.commit()

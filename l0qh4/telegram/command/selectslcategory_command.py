@@ -3,6 +3,7 @@ import re
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from .command import Command
+from ...spending.service.listproposedcategories_service import ListProposedCategoriesService
 from ...repository.spendinglog_repository import SpendingLogRepository
 from ...repository.spendingwordcategory_repository import SpendingWordCategoryRepository 
 
@@ -26,28 +27,8 @@ class SelectSlCategoryCommand(Command):
             self.reply('!e404 - log not exists')
             return
 
-        wordcategorymap = dict()
-        for word in log.get_subject_words():
-            wcmapresultset = self._swc_repository.find_all(word = word)
-            for wcmap in wcmapresultset:
-                if wcmap.category_id in wordcategorymap:
-                    wordcategorymap[wcmap.category_id] += wcmap.score
-                else:
-                    wordcategorymap[wcmap.category_id] = wcmap.score
-
-        categories = l0qh4.get('spendingcategories')
-
-        if len(wordcategorymap) == 0:
-            proposed_categories = [ 
-                    {"id": category.id, "name": category.name, "display_name": category.display_name}
-                    for category in categories.listall()
-            ]
-        else:
-            wordcategorymap = sorted(wordcategorymap.items(), reverse=True, key=lambda x: x[1])
-            proposed_categories = [ 
-                    {"id": category.id, "name": category.name, "display_name": category.display_name}
-                    for category in categories.list_byids([ca[0] for ca in wordcategorymap])
-            ]
+        listservice = ListProposedCategoriesService()
+        proposed_categories = listservice.execute(log)
 
         keyboard = [
                 [

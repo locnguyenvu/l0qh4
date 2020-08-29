@@ -22,7 +22,6 @@ def main():
     dp.add_handler(CallbackQueryHandler(CallbackQueryDispatcher()))
 
     """ Command handler """
-    command_handler = container.command_handler()
     from l0qh4.telegram.command.hello_command import HelloCommand 
     dp.add_handler(CommandHandler('hello', HelloCommand()))
 
@@ -39,7 +38,6 @@ def main():
 
     from l0qh4.telegram.command.log_command import LogCommand
     dp.add_handler(CommandHandler('log', LogCommand()))
-    dp.add_handler(CommandHandler('pm', command_handler.pm))
 
     """ Message handler """
     from l0qh4.telegram.directmessage.dispatcher import Dispatcher as DirectMessageDispatcher
