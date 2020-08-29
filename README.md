@@ -31,7 +31,7 @@ TELEGRAM_LOGGING_GROUP_ID="<telegram-group-id>"
 ```
 $ python3 -m venv env
 $ source env/bin/activate
-$ pip install -f requirements.txt
+$ pip install -r requirements.txt
 ```
 
 4. Tạo db tables
