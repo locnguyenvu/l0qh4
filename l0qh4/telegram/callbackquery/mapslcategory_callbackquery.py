@@ -1,4 +1,6 @@
 import l0qh4
+import time
+import threading
 
 from .callbackquery import CallbackQuery
 from ...spending.service.maplogtocategory_service import MapLogToCategoryService
@@ -19,5 +21,9 @@ class MapSlCategoryCallbackQuery(CallbackQuery):
         mlcservice.execute(log, int(categoryid))
 
         self.update.callback_query.edit_message_text(text=f"{log.get_subject()} => {categoryname}")
+        deletmes = threading.Thread(target=self.clean, daemon=True)
+        deletmes.start()
 
-
+    def clean(self):
+        time.sleep(10)
+        self.update.callback_query.message.delete()
