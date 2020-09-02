@@ -33,7 +33,8 @@ users = providers.Singleton(
         Users,
         user_repository = user_repository)
 
-BASE_PATH = os.getcwd()
+APP_PATH=os.path.dirname(os.path.abspath(__file__))
+BASE_PATH = os.path.dirname(APP_PATH)
 RESOURCE_PATH = os.path.join(BASE_PATH, 'var', 'resources')
 
 def factory(clsname: str):
