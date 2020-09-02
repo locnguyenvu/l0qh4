@@ -57,5 +57,6 @@ class DrawPieChartService(object):
         ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
        
         chartimg_path = os.path.join(l0qh4.RESOURCE_PATH, 'piechart.png')
+        plt.title(f'Tổng cộng: {total:,}', loc="left", bbox={'facecolor':'0.8', 'pad':3})
         plt.savefig(chartimg_path)
         return chartimg_path
