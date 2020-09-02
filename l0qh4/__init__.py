@@ -1,3 +1,4 @@
+import os
 from dependency_injector import providers
 
 from . import (
@@ -32,6 +33,9 @@ users = providers.Singleton(
         Users,
         user_repository = user_repository)
 
+BASE_PATH = os.getcwd()
+RESOURCE_PATH = os.path.join(BASE_PATH, 'var', 'resources')
+
 def factory(clsname: str):
     return None
 
@@ -43,3 +47,4 @@ def get(servicename: str):
     if servicename == 'users':
         return users()
     return None
+

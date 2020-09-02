@@ -12,6 +12,12 @@ class Categories:
                 return category.name
         return None
 
+    def get_displayname(self, catid: int):
+        for category in self.__data:
+            if category.id == catid:
+                return category.name if not category.display_name else category.display_name
+        return 'Unknown' 
+
     def get_id(self, catname: str):
         for category in self.__data:
             if category.name == catname:

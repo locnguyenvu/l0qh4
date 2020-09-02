@@ -25,14 +25,19 @@ class ListProposedCategoriesService(Service):
 
         if len(wordcategorymap) == 0 or flag_listall == True:
             proposed_categories = [ 
-                    {"id": category.id, "name": category.name, "display_name": category.display_name}
+                    {"id": category.id, "name": self._get_name(category)}
                     for category in categories.listall()
             ]
         else:
             wordcategorymap = sorted(wordcategorymap.items(), reverse=True, key=lambda x: x[1])
             proposed_categories = [ 
-                    {"id": category.id, "name": category.name, "display_name": category.display_name}
+                    {"id": category.id, "name": self._get_name(category)}
                     for category in categories.list_byids([ca[0] for ca in wordcategorymap])
             ]
 
         return proposed_categories 
+
+    def _get_name(self, category):
+        if not category.display_name:
+            return category.name
+        return category.display_name

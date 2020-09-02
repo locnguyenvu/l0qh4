@@ -1,13 +1,19 @@
-## The following requirements were added by pip freeze:
 certifi==2020.6.20
 cffi==1.14.1
 click==7.1.2
 cryptography==3.0
+cycler==0.10.0
 decorator==4.4.2
 dependency-injector==3.30.0
+kiwisolver==1.2.0
+matplotlib==3.3.1
+numpy==1.19.1
 pick==1.0.0
+Pillow==7.2.0
 psycopg2-binary==2.8.5
 pycparser==2.20
+pyparsing==2.4.7
+python-dateutil==2.8.1
 python-dotenv==0.14.0
 python-telegram-bot==12.8
 six==1.15.0
