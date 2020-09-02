@@ -38,6 +38,8 @@ class DrawPieChartService(object):
         smallamounts = list() 
         smallsubjects = list()
         for key, value in grouped_by_cate.items():
+            if value <= 0:
+                continue
             rate = int(value) / total * 100
             if (rate < 5):
                 smallamounts.append(int(value))
@@ -45,11 +47,12 @@ class DrawPieChartService(object):
                 continue
             labels.append(self._spendingcategories.get_displayname(int(key)))
             sizes.append(value)
-            explode.append(0)
+            explode.append(0.0)
             
-        sizes.append(sum(smallamounts))
-        labels.append('\n'.join(smallsubjects))
-        explode.append(0.1)
+        if len(smallamounts) > 0:
+            sizes.append(sum(smallamounts))
+            labels.append('\n'.join(smallsubjects))
+            explode.append(0.1)
 
         fig1, ax1 = plt.subplots()
         ax1.pie(sizes, labels=labels, explode=explode, autopct='%1.1f%%',
