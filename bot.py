@@ -39,6 +39,9 @@ def main():
     from l0qh4.telegram.command.log_command import LogCommand
     dp.add_handler(CommandHandler('log', LogCommand()))
 
+    from l0qh4.telegram.command.piechart_command import PieChartCommand
+    dp.add_handler(CommandHandler('pc', PieChartCommand()))
+
     """ Message handler """
     from l0qh4.telegram.directmessage.dispatcher import Dispatcher as DirectMessageDispatcher
     directmessaged_dispatcher = DirectMessageDispatcher(chatgroup_ids=os.getenv('TELEGRAM_LOGGING_GROUP_ID'))
