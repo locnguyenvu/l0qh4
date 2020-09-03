@@ -54,10 +54,13 @@ class DrawPieChartService(object):
             labels.append('\n'.join(smallsubjects))
             explode.append(0.1)
 
-        fig1, ax1 = plt.subplots()
-        ax1.pie(sizes, labels=labels, explode=explode, autopct='%1.1f%%',
+        fig, ax = plt.subplots(figsize=(6, 3), subplot_kw=dict(aspect="equal"))
+        wedges, texts, autotexts = ax.pie(sizes, explode=explode, autopct='%1.1f%%',
                 shadow=False, startangle=90)
-        ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+        ax.legend(wedges, labels,
+          title="Danh mục",
+          loc="lower left",
+          bbox_to_anchor=(1, 0, 0.5, 1))
        
         chartimg_path = os.path.join(l0qh4.RESOURCE_PATH, 'piechart.png')
         plt.title(f'Tổng cộng: {total:,}', loc="left", bbox={'facecolor':'0.8', 'pad':3})
