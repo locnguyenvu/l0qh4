@@ -54,7 +54,7 @@ class DrawPieChartService(object):
             labels.append('\n'.join(smallsubjects))
             explode.append(0.1)
 
-        fig, ax = plt.subplots(figsize=(6, 3), subplot_kw=dict(aspect="equal"))
+        fig, ax = plt.subplots(figsize=(6, 4), subplot_kw=dict(aspect="equal"))
         wedges, texts, autotexts = ax.pie(sizes, explode=explode, autopct='%1.1f%%',
                 shadow=False, startangle=90)
         ax.legend(wedges, labels,
