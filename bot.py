@@ -2,14 +2,10 @@ import os
 
 from dotenv import load_dotenv
 from telegram.ext import CallbackQueryHandler, CommandHandler, MessageHandler, Updater, Filters
-from l0qh4.container import BotContainer
 
 load_dotenv()
 
 def main():
-    container = BotContainer()
-    container.config.db.url.from_env('DATABASE_URL')
-
     updater = Updater(
             token = os.getenv('TELEGRAM_BOT_TOKEN'),
             use_context = True)
@@ -44,6 +40,9 @@ def main():
 
     from l0qh4.telegram.command.logdetail_command import LogDetailCommand
     dp.add_handler(CommandHandler('d', LogDetailCommand()))
+
+    from l0qh4.telegram.command.listcategory_command import ListCategoryCommand
+    dp.add_handler(CommandHandler('lsc', ListCategoryCommand()))
 
     """ Message handler """
     from l0qh4.telegram.directmessage.dispatcher import Dispatcher as DirectMessageDispatcher
