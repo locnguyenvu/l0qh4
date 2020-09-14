@@ -3,8 +3,8 @@ from ..repository.user_repository import UserRepository
 class Users(object):
 
     def __init__(self, user_repository: UserRepository):
-        self.__u_repository = user_repository
-        self.__data = self.__u_repository.find_all()
+        self._u_repository = user_repository
+        self.__data = self._u_repository.find_all()
 
     def find_user(self, **kwargs):
         for key, value in kwargs.items():

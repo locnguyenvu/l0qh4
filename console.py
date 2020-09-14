@@ -6,15 +6,11 @@ import os
 import l0qh4
 
 from pick import pick
-from l0qh4.container import ConsoleContainer
 from l0qh4.spending.service.listproposedcategories_service import ListProposedCategoriesService
 from l0qh4.spending.service.maplogtocategory_service import MapLogToCategoryService
 from l0qh4.repository.spendinglog_repository import SpendingLogRepository
 
-container = ConsoleContainer()
-container.config.db.url.from_env('DATABASE_URL')
-
-@click.group()
+@click.group() 
 def console():
     pass
 

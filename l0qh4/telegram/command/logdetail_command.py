@@ -20,7 +20,7 @@ class LogDetailCommand(Command):
                         '{:4} {}'.format('#id', log.get_id()),
                         '{:4} {}'.format('sbj', log.get_subject()),
                         '{:4} {}'.format('amt', log.get_amount(human_format=True)),
-                        '{:4} {:}'.format('cat', spendingcategories.get_displayname(log.get_category_id())),
+                        '{:4} {:}'.format('cat', log.get_category_name()),
                         '```'
                     ]),
                 parse_mode = telegram.ParseMode.MARKDOWN_V2)

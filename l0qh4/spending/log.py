@@ -80,3 +80,11 @@ class Log(DomainModel):
     def get_subject_words(self):
         return StringUtil.split_to_words(self.__subject)
 
+    def get_category(self):
+        categories = l0qh4.get('spendingcategories')
+        return categories.get(self.get_category_id())
+
+    def get_category_name(self):
+        cat = self.get_category()
+        return cat.display_name if cat.display_name is not None else cat.name
+
