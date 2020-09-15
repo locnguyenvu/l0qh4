@@ -19,5 +19,3 @@ class LogCommand(Command):
             "created_by" : self.username,
             "telegram_message_id" : self.message_id 
         })
-
-        self.reply(f"hello loc {log.get_id()}")
