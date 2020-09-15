@@ -15,6 +15,9 @@ class MapSlCategoryCallbackQuery(CallbackQuery):
     def execute(self, logid, categoryid):
 
         log = self._sl_repository.find_first(id = int(logid))
+        if log is None:
+            self.reply('!e404 - log not exists')
+            return
         categoryname = self._scategories.get_displayname(int(categoryid))
 
         mlcservice = MapLogToCategoryService()

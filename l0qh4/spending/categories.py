@@ -39,3 +39,10 @@ class Categories:
             if category.id == id:
                 return True
         return False
+
+    def get(self, id: int):
+        from pprint import pprint
+        for cat in self.__data:
+            if int(cat.id) == int(id):
+                return cat
+        return None

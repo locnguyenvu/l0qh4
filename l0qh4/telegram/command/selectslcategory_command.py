@@ -14,10 +14,9 @@ class SelectSlCategoryCommand(Command):
         self._swc_repository = SpendingWordCategoryRepository(l0qh4.get('db'))
 
     def find_log(self):
-        logid_search = re.search(r'\d+', self.update.message.text)
-        if logid_search is None:
-            return None
-        log = self._sl_repository.find_first(id=int(logid_search.group(0)))
+        if self.update.message.reply_to_message is None:
+            return
+        log = self._sl_repository.find_first(telegram_message_id=int(self.update.message.reply_to_message.message_id))
         return log
 
     def process(self):
@@ -28,7 +27,7 @@ class SelectSlCategoryCommand(Command):
             return
 
         listservice = ListProposedCategoriesService()
-        proposed_categories = listservice.execute(log)
+        proposed_categories = listservice.execute(log, {"list_all": True})
 
         keyboard = [
                 [
