@@ -29,8 +29,8 @@ def main():
     dp.add_handler(CommandHandler('tm', ThismonthCommand()))
     dp.add_handler(CommandHandler('thismonth', ThismonthCommand(show_detail=True)))
 
-    from l0qh4.telegram.command.selectslcategory_command import  SelectSlCategoryCommand
-    dp.add_handler(CommandHandler('mlc',SelectSlCategoryCommand()))
+    from l0qh4.telegram.command.maplogcategory_command import MapLogCategoryCommand
+    dp.add_handler(CommandHandler('mlc',MapLogCategoryCommand()))
 
     from l0qh4.telegram.command.log_command import LogCommand
     dp.add_handler(CommandHandler('log', LogCommand()))

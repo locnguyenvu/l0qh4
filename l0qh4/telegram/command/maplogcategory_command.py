@@ -7,7 +7,7 @@ from ...spending.service.listproposedcategories_service import ListProposedCateg
 from ...repository.spendinglog_repository import SpendingLogRepository
 from ...repository.spendingwordcategory_repository import SpendingWordCategoryRepository 
 
-class SelectSlCategoryCommand(Command):
+class MapLogCategoryCommand(Command):
 
     def __init__(self):
         self._sl_repository = SpendingLogRepository(l0qh4.get('db'))
@@ -40,3 +40,9 @@ class SelectSlCategoryCommand(Command):
 
         reply_markup = InlineKeyboardMarkup(keyboard)
         self.update.message.reply_text(f'{log.get_subject()}', reply_markup=reply_markup)
+        
+        # clear command
+        self.bot.deleteMessage(
+                chat_id=self.update.message.chat.id, 
+                message_id=self.update.message.message_id)
+
