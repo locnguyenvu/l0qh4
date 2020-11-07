@@ -10,7 +10,6 @@ def main():
             token = os.getenv('TELEGRAM_BOT_TOKEN'),
             use_context = True)
 
-
     dp = updater.dispatcher
 
     """ CallbackQuery handler """
@@ -23,11 +22,9 @@ def main():
 
     from l0qh4.telegram.command.today_command import TodayCommand
     dp.add_handler(CommandHandler('td', TodayCommand()))
-    dp.add_handler(CommandHandler('today', TodayCommand(show_detail=True)))
 
     from l0qh4.telegram.command.thismonth_command import ThismonthCommand
     dp.add_handler(CommandHandler('tm', ThismonthCommand()))
-    dp.add_handler(CommandHandler('thismonth', ThismonthCommand(show_detail=True)))
 
     from l0qh4.telegram.command.maplogcategory_command import MapLogCategoryCommand
     dp.add_handler(CommandHandler('mlc',MapLogCategoryCommand()))
