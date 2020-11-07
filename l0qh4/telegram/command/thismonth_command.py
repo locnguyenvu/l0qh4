@@ -6,15 +6,14 @@ from ...repository.spendinglog_repository import SpendingLogRepository
 
 class ThismonthCommand(Command):
 
-    def __init__(self, show_detail=False):
+    def __init__(self):
         self._sl_repository = SpendingLogRepository(l0qh4.get('db'))
-        self._showdetail = show_detail
 
     def process(self):
         logs = self._sl_repository.find_intimerange('thismonth')
         totalamount = sum([ log.get_amount() for log in logs ])
 
-        if self._showdetail is False:
+        if self.hasOption('d') is False:
             self.reply(f'Tổng cộng tháng này: {totalamount:,}')
             return
         else:

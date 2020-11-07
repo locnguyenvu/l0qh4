@@ -1,5 +1,6 @@
 import l0qh4
 import telegram
+import re
 
 from abc import ABCMeta, abstractmethod
 
@@ -53,3 +54,12 @@ class Command(metaclass=ABCMeta):
 
     def get_messagecontent(self):
         return self.update.message.text
+
+    def hasOption(self, optionAlias) -> bool:
+        message_chunks = self.update.message.text.split(' ')
+        for charecters in message_chunks:
+            if not re.match(r'^\-{1,2}[a-zA-Z]+', charecters):
+                continue
+
+            return re.sub(r'^\-{1,2}', '', charecters) == optionAlias
+
